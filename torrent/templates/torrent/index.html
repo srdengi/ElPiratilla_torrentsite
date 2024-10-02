@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElPiratilla</title>
+    <link rel="icon" href="/static/icono.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/static/logo2.png" alt=" Logo">
+        </div>
+        <div class="search">
+            <form action="{% url 'search' %}" method="GET">
+                <input type="text" name="q" placeholder="Buscar...">
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+        <br>
+        <br>
+        
+        <div class="view-all">
+            <a href="{% url 'torrent_list' %}">Ver todo el catálogo</a>
+        </div>
+        <br>
+
+        <div class="view-all">
+            <a href="{% url 'upload_torrent' %}">Sube tu archivo!</a>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: url('/static/bg3.jpeg') no-repeat center center fixed; 
+        background-size: cover; 
+        overflow: hidden;
+    }
+
+    .container {
+        margin-top: 2vh;
+    }
+
+    .logo img {
+       
+        width: 500px;
+        height: auto;
+        margin-top: 55px;
+    }
+
+    .search {
+        margin-top: 0px;
+        text-align: center;
+        
+    }
+
+    .search input[type="text"] {
+        padding: 10px;
+        width: 400px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .search button {
+        padding: 10px 20px;
+        background-color: #cd871d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search button:hover {
+        background-color: #dd402b;
+    }
+
+    .view-all {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .view-all a {
+        padding: 7px 20px;
+        background-color: #cd871d;
+        color: rgb(0, 0, 0);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 16px;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+    .view-all a:hover {
+        background-color: #dd402b;
+    }
+</style>
+</html>

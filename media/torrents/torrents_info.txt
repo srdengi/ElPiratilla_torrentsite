@@ -1,0 +1,9 @@
+Comandos sesion nginx(rtmp)
+
+sudo ./nginx
+
+sudo ./nginx -s stop
+
+verifica estado del server: ps aux | grep nginx
+verifica puertos: sudo netstat -tuln | grep nginx
+

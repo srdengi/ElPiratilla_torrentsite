@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Subir Torrent</title>
+    <style>
+        body {
+            background: url('/static/bg3.jpeg') no-repeat center center fixed; 
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-top: 50px;
+        }
+        form {
+            margin-top: 30px;
+        }
+        input[type="file"] {
+            border: 2px solid #0f0;
+            padding: 10px;
+            background-color: #222;
+            color: #0f0;
+            font-size: 1.2em;
+        }
+        button[type="submit"] {
+            border: 2px solid #0f0;
+            padding: 10px 20px;
+            background-color: #222;
+            color: #0f0;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        button[type="submit"]:hover {
+            background-color: #0f0;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Subir Torrent</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

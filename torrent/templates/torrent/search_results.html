@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de la búsqueda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: url('/static/bg3.jpeg') no-repeat center center fixed; 
+            font-family: 'Press Start 2P', cursive;
+            margin: 0; /* Eliminar márgenes predeterminados del cuerpo */
+            padding-top: 100px; /* Ajustar el espacio superior para el logo */
+            text-align: center; /* Centrar el contenido */
+            color: white;
+            
+        }
+
+        .logo img {
+            max-width: 300px; /* Tamaño máximo del logo */
+            height: auto; /* Altura automática */
+            margin-bottom: 20px; /* Espacio debajo del logo */
+        }
+
+        /* Agrega el resto de tu CSS aquí */
+        .results-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Envolver elementos en varias filas si es necesario */
+        }
+
+        .results-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-item {
+            width: 300px; /* Ancho máximo de cada elemento de resultado */
+            margin: 20px; /* Espacio entre elementos */
+            padding: 20px; /* Relleno interior */
+            border: 1px solid #ccc; /* Borde */
+            border-radius: 5px; /* Bordes redondeados */
+            text-align: left; /* Alinear el texto a la izquierda */
+        }
+
+        .result-image img {
+            max-width: 100%; 
+            height: auto; 
+            margin-bottom: 10px; 
+        }
+
+        .result-details a {
+            text-decoration: none; 
+            color: rgb(23, 221, 76); 
+        }
+
+        .result-details a:hover {
+            color: rgb(13, 240, 47); 
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="/static/logo2.png" alt="Logo">
+    </div>
+    
+    {% if query %}
+        <h2>{{ results|length }} Resultados "{{query}}" </h2>
+        <div class="results-container">
+            <ul class="results-list">
+                {% for result in results %}
+                    <li class="result-item">
+                        <div class="result-details">
+                            <h3>{{ result.title }}</h3>
+                            <p>{{ result.description }}</p>
+                            <p>Idioma: {{ result.get_language_display }}</p>
+                            <br>
+                            <p><a href="{% url 'download_torrent' result.id %}">Descargar Torrent</a></p>
+                        </div>
+                        <div class="result-image">
+                            <img src="{{ result.image.url }}" alt="{{ result.title }}">
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>No se encontraron resultados.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo el catálogo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background: url('/static/bg3.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #181818;
+            padding: 2px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .separator {
+            width: 100%;
+            height: 1px;
+            background-color: #fff;
+            margin: 10px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px 10px;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        .navbar-text {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .alphabet-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #4CAF50;
+            min-width: 120px;
+            z-index: 1;
+            border-radius: 10px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.8rem;
+            cursor: pointer; /* Cambio importante: agregar cursor pointer */
+        }
+
+        .dropdown-content a:hover {
+            background-color: #45a049;
+        }
+
+        .alphabet-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .movie-list {
+            margin-top: 50px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .movie-item {
+            width: 100%;
+            background-color: #181818;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8rem;
+        }
+
+        .movie-item h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .movie-item p {
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .movie-item a {
+            color: #0da230;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .movie-item a:hover {
+            color: #11b91f;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <img src="/static/logo2.png" alt="Logo" class="logo"  >
+            <span class="navbar-text">Listado de Películas</span>
+            <div class="alphabet-dropdown">
+                <button class="all-button">Filtrar</button>
+                <div class="dropdown-content" id="alphabet-dropdown">
+                    {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+                        <a>{{ letter }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="movie-list">
+            {% for torrent in torrents %}
+                <div class="movie-item" data-title="{{ torrent.title }}">
+                    <h3>{{ torrent.title }}</h3>
+                    <p>{{ torrent.description }}</p>
+                    <p>Idioma: {{ torrent.get_language_display }}</p>
+                    <p>{{ torrent.date }}</p>
+                    <p>Vistas: {{ torrent.views }}</p>
+                    <p><a href="{% url 'download_torrent' torrent.id %}">Descargar Torrent</a></p>
+                </div>
+                <div class="separator"></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const allButton = document.querySelector('.all-button');
+            const movies = document.querySelectorAll('.movie-item');
+
+            // Agregar evento de clic a cada letra
+            document.querySelectorAll('.alphabet-dropdown a').forEach(letter => {
+                letter.addEventListener('click', function() {
+                    const selectedLetter = this.textContent;
+                    filterMovies(selectedLetter);
+                });
+            });
+
+            function filterMovies(letter) {
+                movies.forEach(movie => {
+                    const title = movie.dataset.title;
+                    const normalizedTitle = title.trim().toUpperCase();
+                    if (normalizedTitle.charAt(0) === letter) {
+                        movie.style.display = 'block';
+                    } else {
+                        movie.style.display = 'none';
+                    }
+                });
+            }
+
+            allButton.addEventListener('click', function() {
+                movies.forEach(movie => {
+                    movie.style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
